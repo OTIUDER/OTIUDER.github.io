@@ -1,0 +1,107 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  background-color: #ffd700;
+  padding: 20px;
+  border-bottom: 2px solid #ffa500;
+  width: 100%;
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin: 0;
+  color: #5a5a5a;
+}
+
+header p {
+  font-size: 1.2em;
+  margin: 5px 0 0;
+  color: #7a7a7a;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.profile-card:hover {
+  transform: scale(1.05);
+}
+
+.profile-pic {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 1.8em;
+  color: #444;
+}
+
+p {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  border: none;
+  border-radius: 50%;
+  padding: 15px;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.dislike {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+button.like {
+  background-color: #76c893;
+  color: white;
+}
+
+button:hover {
+  transform: scale(1.2);
+}
+
+footer {
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #666;
+}
