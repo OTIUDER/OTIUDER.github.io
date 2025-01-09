@@ -1,69 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Oma Tinder - Silver Sparks</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Silver Sparks</h1>
-      <p>Vind nieuwe vriendschappen en connecties!</p>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oma Tinder - Silver Sparks</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Silver Sparks</h1>
+    <p>Vind nieuwe vriendschappen en connecties!</p>
+  </header>
 
-    <main>
-      <div class="profile-card">
-        <img src="profile1.jpg" alt="Profiel foto" class="profile-pic" />
-        <h2>Oma Annie</h2>
-        <p><strong>Leeftijd:</strong> 72</p>
-        <p><strong>Hobby's:</strong> Breien, tuinieren, wandelen</p>
-        <div class="actions">
-          <button class="dislike">❌</button>
-          <button class="like">❤️</button>
-        </div>
+  <main>
+    <div class="profile-card">
+      <img src="profile1.jpg" alt="Profiel foto" class="profile-pic">
+      <h2>Oma Annie</h2>
+      <p><strong>Leeftijd:</strong> 72</p>
+      <p><strong>Hobby's:</strong> Breien, tuinieren, wandelen</p>
+      <div class="actions">
+        <button class="dislike">❌</button>
+        <button class="like">❤️</button>
       </div>
-    </main>
+    </div>
 
-    <footer>
-      <p>&copy; 2025 Silver Sparks. Alle rechten voorbehouden.</p>
-    </footer>
+    <div class="chat-container" style="display: none;">
+      <h2>Chat met Oma Annie</h2>
+      <div class="chat-box">
+        <div class="messages"></div>
+        <input type="text" placeholder="Typ een bericht..." class="chat-input">
+        <button class="send-btn">Verstuur</button>
+      </div>
+    </div>
+  </main>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const profiles = [
-          {
-            name: "Oma Annie",
-            age: 72,
-            hobbies: "Breien, tuinieren, wandelen",
-            img: "profile1.jpg",
-          },
-          {
-            name: "Oma Maria",
-            age: 68,
-            hobbies: "Koken, lezen, bordspellen",
-            img: "profile2.jpg",
-          },
-          {
-            name: "Oma Johanna",
-            age: 75,
-            hobbies: "Schilderen, muziek luisteren, puzzelen",
-            img: "profile3.jpg",
-          },
-          {
-            name: "Opa Henk",
-            age: 64,
-            hobbies: "Bouwen, Puzzelen, Spuiten (met water)",
-            img: "profile4.jpg",
-          },
-        ];
+  <footer>
+    <p>&copy; 2025 Silver Sparks. Alle rechten voorbehouden.</p>
+  </footer>
 
-        let currentIndex = 0;
-        const profileCard = document.querySelector(".profile-card");
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const profiles = [
+        {
+          name: 'Oma Annie',
+          age: 72,
+          hobbies: 'Breien, tuinieren, wandelen',
+          img: 'profile1.jpg'
+        },
+        {
+          name: 'Oma Maria',
+          age: 68,
+          hobbies: 'Koken, lezen, bordspellen',
+          img: 'profile2.jpg'
+        },
+        {
+          name: 'Oma Johanna',
+          age: 75,
+          hobbies: 'Schilderen, muziek luisteren, puzzelen',
+          img: 'profile3.jpg'
+        }
+      ];
 
-        const updateProfile = (index) => {
-          const profile = profiles[index];
-          profileCard.innerHTML = `
+      let currentIndex = 0;
+      const profileCard = document.querySelector('.profile-card');
+      const chatContainer = document.querySelector('.chat-container');
+      const messagesDiv = document.querySelector('.messages');
+      const chatInput = document.querySelector('.chat-input');
+      const sendBtn = document.querySelector('.send-btn');
+
+      const updateProfile = (index) => {
+        const profile = profiles[index];
+        profileCard.innerHTML = `
           <img src="${profile.img}" alt="Profiel foto" class="profile-pic">
           <h2>${profile.name}</h2>
           <p><strong>Leeftijd:</strong> ${profile.age}</p>
@@ -73,25 +80,38 @@
             <button class="like">❤️</button>
           </div>
         `;
-          addEventListeners();
-        };
+        addEventListeners();
+      };
 
-        const addEventListeners = () => {
-          const likeButton = document.querySelector(".like");
-          const dislikeButton = document.querySelector(".dislike");
+      const addEventListeners = () => {
+        const likeButton = document.querySelector('.like');
+        const dislikeButton = document.querySelector('.dislike');
 
-          likeButton.addEventListener("click", () => {
-            profileCard.innerHTML = `<h2>Je hebt een match met ${profiles[currentIndex].name}! 🎉</h2>`;
-          });
+        likeButton.addEventListener('click', () => {
+          profileCard.style.display = 'none';
+          chatContainer.style.display = 'block';
+        });
 
-          dislikeButton.addEventListener("click", () => {
-            currentIndex = (currentIndex + 1) % profiles.length;
-            updateProfile(currentIndex);
-          });
-        };
+        dislikeButton.addEventListener('click', () => {
+          currentIndex = (currentIndex + 1) % profiles.length;
+          updateProfile(currentIndex);
+        });
+      };
 
-        updateProfile(currentIndex);
+      sendBtn.addEventListener('click', () => {
+        const message = chatInput.value.trim();
+        if (message) {
+          messagesDiv.innerHTML += `<div class='user-message'>${message}</div>`;
+          chatInput.value = '';
+          setTimeout(() => {
+            messagesDiv.innerHTML += `<div class='bot-message'>Wat leuk om van je te horen! 😊</div>`;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+          }, 1000);
+        }
       });
-    </script>
-  </body>
+
+      updateProfile(currentIndex);
+    });
+  </script>
+</body>
 </html>
