@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oma Tinder - Silver Sparks</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Silver Sparks</h1>
+      <p>Vind nieuwe vriendschappen en connecties!</p>
+    </header>
+
+    <main>
+      <div class="profile-card">
+        <img src="profile1.jpg" alt="Profiel foto" class="profile-pic" />
+        <h2>Oma Annie</h2>
+        <p><strong>Leeftijd:</strong> 72</p>
+        <p><strong>Hobby's:</strong> Breien, tuinieren, wandelen</p>
+        <div class="actions">
+          <button class="dislike">❌</button>
+          <button class="like">❤️</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Silver Sparks. Alle rechten voorbehouden.</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const profiles = [
+          {
+            name: "Oma Annie",
+            age: 72,
+            hobbies: "Breien, tuinieren, wandelen",
+            img: "profile1.jpg",
+          },
+          {
+            name: "Oma Maria",
+            age: 68,
+            hobbies: "Koken, lezen, bordspellen",
+            img: "profile2.jpg",
+          },
+          {
+            name: "Oma Johanna",
+            age: 75,
+            hobbies: "Schilderen, muziek luisteren, puzzelen",
+            img: "profile3.jpg",
+          },
+        ];
+
+        let currentIndex = 0;
+        const profileCard = document.querySelector(".profile-card");
+
+        const updateProfile = (index) => {
+          const profile = profiles[index];
+          profileCard.innerHTML = `
+          <img src="${profile.img}" alt="Profiel foto" class="profile-pic">
+          <h2>${profile.name}</h2>
+          <p><strong>Leeftijd:</strong> ${profile.age}</p>
+          <p><strong>Hobby's:</strong> ${profile.hobbies}</p>
+          <div class="actions">
+            <button class="dislike">❌</button>
+            <button class="like">❤️</button>
+          </div>
+        `;
+          addEventListeners();
+        };
+
+        const addEventListeners = () => {
+          const likeButton = document.querySelector(".like");
+          const dislikeButton = document.querySelector(".dislike");
+
+          likeButton.addEventListener("click", () => {
+            profileCard.innerHTML = `<h2>Je hebt een match met ${profiles[currentIndex].name}! 🎉</h2>`;
+          });
+
+          dislikeButton.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % profiles.length;
+            updateProfile(currentIndex);
+          });
+        };
+
+        updateProfile(currentIndex);
+      });
+    </script>
+  </body>
+</html>
