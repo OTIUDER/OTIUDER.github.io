@@ -25,7 +25,7 @@
     </div>
 
     <div class="chat-container" style="display: none;">
-      <h2>Chat met Oma Annie</h2>
+      <h2>Chat met <span class="chat-name">Oma Annie</span></h2>
       <div class="chat-box">
         <div class="messages"></div>
         <input type="text" placeholder="Typ een bericht..." class="chat-input">
@@ -54,16 +54,23 @@
           img: 'profile2.jpg'
         },
         {
+          name: 'Opa Jan',
+          age: 74,
+          hobbies: 'Vissen, fietsen, kaarten',
+          img: 'profile3.jpg'
+        },
+        {
           name: 'Oma Johanna',
           age: 75,
           hobbies: 'Schilderen, muziek luisteren, puzzelen',
-          img: 'profile3.jpg'
+          img: 'profile4.jpg'
         }
       ];
 
       let currentIndex = 0;
       const profileCard = document.querySelector('.profile-card');
       const chatContainer = document.querySelector('.chat-container');
+      const chatName = document.querySelector('.chat-name');
       const messagesDiv = document.querySelector('.messages');
       const chatInput = document.querySelector('.chat-input');
       const sendBtn = document.querySelector('.send-btn');
@@ -88,6 +95,7 @@
         const dislikeButton = document.querySelector('.dislike');
 
         likeButton.addEventListener('click', () => {
+          chatName.textContent = profiles[currentIndex].name;
           profileCard.style.display = 'none';
           chatContainer.style.display = 'block';
         });
@@ -104,7 +112,7 @@
           messagesDiv.innerHTML += `<div class='user-message'>${message}</div>`;
           chatInput.value = '';
           setTimeout(() => {
-            messagesDiv.innerHTML += `<div class='bot-message'>Wat leuk om van je te horen! 😊</div>`;
+            messagesDiv.innerHTML += `<div class='bot-message'>Wat leuk om van je te horen, ${chatName.textContent}! 😊</div>`;
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
           }, 1000);
         }
