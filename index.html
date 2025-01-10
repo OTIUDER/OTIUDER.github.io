@@ -5,6 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oma Tinder - Silver Sparks</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .profile-card {
+      position: relative;
+      border: 2px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+      }
+      100% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -13,6 +35,14 @@
   </header>
 
   <main>
+    <div class="preferences">
+      <h2>Kies je voorkeur</h2>
+      <label><input type="radio" name="preference" value="all" checked> Iedereen</label>
+      <label><input type="radio" name="preference" value="oma"> Alleen Oma's</label>
+      <label><input type="radio" name="preference" value="opa"> Alleen Opa's</label>
+      <button class="apply-preference">Toepassen</button>
+    </div>
+
     <div class="profile-card">
       <img src="profile1.jpg" alt="Profiel foto" class="profile-pic">
       <h2>Oma Annie</h2>
@@ -45,25 +75,43 @@
           name: 'Oma Annie',
           age: 72,
           hobbies: 'Breien, tuinieren, wandelen',
-          img: 'profile1.jpg'
+          img: 'profile1.jpg',
+          type: 'oma'
         },
         {
           name: 'Oma Maria',
           age: 68,
           hobbies: 'Koken, lezen, bordspellen',
-          img: 'profile2.jpg'
+          img: 'profile2.jpg',
+          type: 'oma'
         },
         {
           name: 'Opa Jan',
           age: 74,
-          hobbies: 'Vissen, fietsen, spuiten (met water)',
-          img: 'profile4.jpg'
+          hobbies: 'Vissen, fietsen, kaarten',
+          img: 'profile3.jpg',
+          type: 'opa'
         },
         {
           name: 'Oma Johanna',
           age: 75,
           hobbies: 'Schilderen, muziek luisteren, puzzelen',
-          img: 'profile3.jpg'
+          img: 'profile4.jpg',
+          type: 'oma'
+        },
+        {
+          name: 'Opa Kees',
+          age: 70,
+          hobbies: 'Schaken, koken, reizen',
+          img: 'profile5.jpg',
+          type: 'opa'
+        },
+        {
+          name: 'Oma Els',
+          age: 66,
+          hobbies: 'Lezen, yoga, natuurwandelingen',
+          img: 'profile6.jpg',
+          type: 'oma'
         }
       ];
 
@@ -74,6 +122,8 @@
       const messagesDiv = document.querySelector('.messages');
       const chatInput = document.querySelector('.chat-input');
       const sendBtn = document.querySelector('.send-btn');
+      const preferences = document.querySelector('.preferences');
+      const applyPreferenceBtn = document.querySelector('.apply-preference');
 
       const botReplies = [
         "Wat leuk om van je te horen! 😊",
@@ -86,8 +136,22 @@
         "Wat zijn je plannen voor vandaag?"
       ];
 
+      let filteredProfiles = profiles;
+
+      const filterProfiles = (preference) => {
+        if (preference === 'oma') {
+          filteredProfiles = profiles.filter(profile => profile.type === 'oma');
+        } else if (preference === 'opa') {
+          filteredProfiles = profiles.filter(profile => profile.type === 'opa');
+        } else {
+          filteredProfiles = profiles;
+        }
+        currentIndex = 0;
+        updateProfile(currentIndex);
+      };
+
       const updateProfile = (index) => {
-        const profile = profiles[index];
+        const profile = filteredProfiles[index];
         profileCard.innerHTML = `
           <img src="${profile.img}" alt="Profiel foto" class="profile-pic">
           <h2>${profile.name}</h2>
@@ -106,13 +170,13 @@
         const dislikeButton = document.querySelector('.dislike');
 
         likeButton.addEventListener('click', () => {
-          chatName.textContent = profiles[currentIndex].name;
+          chatName.textContent = filteredProfiles[currentIndex].name;
           profileCard.style.display = 'none';
           chatContainer.style.display = 'block';
         });
 
         dislikeButton.addEventListener('click', () => {
-          currentIndex = (currentIndex + 1) % profiles.length;
+          currentIndex = (currentIndex + 1) % filteredProfiles.length;
           updateProfile(currentIndex);
         });
       };
@@ -128,6 +192,11 @@
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
           }, 1000);
         }
+      });
+
+      applyPreferenceBtn.addEventListener('click', () => {
+        const selectedPreference = document.querySelector('input[name="preference"]:checked').value;
+        filterProfiles(selectedPreference);
       });
 
       updateProfile(currentIndex);
