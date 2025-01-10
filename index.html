@@ -75,6 +75,17 @@
       const chatInput = document.querySelector('.chat-input');
       const sendBtn = document.querySelector('.send-btn');
 
+      const botReplies = [
+        "Wat leuk om van je te horen! 😊",
+        "Vertel me meer over jezelf!",
+        "Ik hou ook van wandelen, wat is jouw favoriete plek?",
+        "Dat klinkt interessant!",
+        "Haha, geweldig! 😄",
+        "Kun je daar meer over vertellen?",
+        "Ik geniet altijd van een goed gesprek!",
+        "Wat zijn je plannen voor vandaag?"
+      ];
+
       const updateProfile = (index) => {
         const profile = profiles[index];
         profileCard.innerHTML = `
@@ -112,7 +123,8 @@
           messagesDiv.innerHTML += `<div class='user-message'>${message}</div>`;
           chatInput.value = '';
           setTimeout(() => {
-            messagesDiv.innerHTML += `<div class='bot-message'>Wat leuk om van je te horen, ${chatName.textContent}! 😊</div>`;
+            const randomReply = botReplies[Math.floor(Math.random() * botReplies.length)];
+            messagesDiv.innerHTML += `<div class='bot-message'>${randomReply}</div>`;
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
           }, 1000);
         }
